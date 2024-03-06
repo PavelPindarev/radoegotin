@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Home</title>
+    <style type="text/css">
+        .error {
+            color: red
+        }
+    </style>
+</h:head>
+<h:body>
+    <ui:decorate template="template/layout.xhtml">
+        <ui:define name="content">
+            <h:form>
+                <h:panelGrid columns="1">
+                    <h:outputLabel value="FirstName: "/>
+                    <h:inputText id="first_name" value="#{personBean.firstName}"
+                                 validator="#{personBean.validateFirstName}"
+                                 label="First Name" size="30"/>
+                    <h:message styleClass="error" for="first_name"/>
+
+                    <h:outputLabel value="LastName: "/>
+                    <h:inputText id="last_name" value="#{personBean.lastName}"
+                                 required="true" requiredMessage="Last Name is required"
+                                 label="Last Name" size="30"/>
+                    <h:message styleClass="error" for="last_name"/>
+
+                    <h:outputLabel value="Email: "/>
+                    <h:inputText id="email" value="#{personBean.email}"
+                                 validatorMessage="Invalid Email"
+                                 label="Email" size="30">
+                        <f:validateRegex pattern="^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*$"/>
+                    </h:inputText>
+                    <h:message styleClass="error" for="email"/>
+
+                    <h:outputLabel value="Age: "/>
+                    <h:inputText id="age" value="#{personBean.age}"
+                                 label="Age" validatorMessage="Your age should be equal or above 18">
+                        <f:validateLongRange minimum="18"/>
+                    </h:inputText>
+                    <h:message styleClass="error" for="age"/>
+
+                    <h:outputLabel value="Select Country: "/>
+                    <h:selectOneMenu id="country" label="Country" value="#{personBean.country}"
+                                     required="true" requiredMessage="Country is required">
+                        <f:selectItem itemLabel="Country"/>
+                        <f:selectItem itemValue="BG" itemLabel="Bulgaria"/>
+                        <f:selectItem itemValue="RU" itemLabel="Russia"/>
+                        <f:selectItem itemValue="USA" itemLabel="United States"/>
+                        <f:selectItem itemValue="HU" itemLabel="Hungary"/>
+                        <f:selectItem itemValue="DE" itemLabel="Germany"/>
+                    </h:selectOneMenu>
+                    <h:message styleClass="error" for="country"/>
+
+                    <h:outputLabel value="Select Programming Language: "/>
+                    <h:selectOneRadio id="language" label="Programming Language"
+                                      value="#{personBean.programmingLanguage}"
+                                      required="true" requiredMessage="Programming Language is required">
+                        <f:selectItem itemLabel="Java" itemValue="Java"/>
+                        <f:selectItem itemLabel="JS" itemValue="JS"/>
+                        <f:selectItem itemLabel="C#" itemValue="C#"/>
+                        <f:selectItem itemLabel="Python" itemValue="Python"/>
+                    </h:selectOneRadio>
+                    <h:message styleClass="error" for="language"/>
+                </h:panelGrid>
+                <h:commandButton action="#{personBean.welcome()}" type="submit" value="Submit"/>
+            </h:form>
+            <h:form>
+                <h:commandButton action="/deleteOldRecords" value="DeleteOldRecords" type="submit"/>
+            </h:form>
+        </ui:define>
+    </ui:decorate>
+</h:body>
+</html>
